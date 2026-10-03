@@ -117,12 +117,12 @@ FlowDesk adds `VITE_SOCKET_URL` for a separately hosted API.
 
 ## Deployment
 
-The source is ready for separate frontend/API deployment; publishing the repository does not deploy the application.
+Requested test target: ChatGPT Sites. Hosted testing remains pending; see [verification scope](docs/TESTING.md). The frontend can run on Sites, but the documented Node/PostgreSQL API and Socket.IO server require a compatible backend runtime. Publishing this repository does not deploy the application.
 
-1. Deploy `client/` to Vercel. Install from the repository workspace root and build with `npm run build -w client`; output is `client/dist`. Set `VITE_API_URL` to the API's HTTPS `/api` URL.
+1. For the requested test setup, publish `client/` on ChatGPT Sites after a compatible backend has been configured. Install from the repository workspace root and build with `npm run build -w client`; output is `client/dist`. Set `VITE_API_URL` to the API's HTTPS `/api` URL.
 2. Deploy the Express API to a Node/Docker host and provision PostgreSQL. Set server variables, generate Prisma, build, apply migrations and start the API. Backend start from repository root: `npm start -w server`.
 3. Set an exact frontend `CLIENT_URL` and secure cookie settings. Bootstrap demo accounts only in a demonstration environment. Do not assume a host's free tier supports persistent files or always-on processes.
-4. Enable WebSocket upgrades and set `VITE_SOCKET_URL`. A long-lived Socket.IO server belongs on the API host, not a Vercel function.
+4. Enable WebSocket upgrades and set `VITE_SOCKET_URL`. A long-lived Socket.IO server belongs on the API host.
 
 ## Future improvements
 
