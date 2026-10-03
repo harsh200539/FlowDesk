@@ -1,0 +1,491 @@
+{
+  "info": {
+    "name": "FlowDesk",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Cookie-based API collection. Set IDs after creating resources. Resume and Stripe webhook requests require multipart/signature configuration."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5003/api"
+    },
+    {
+      "key": "password",
+      "value": "set-your-SEED_PASSWORD"
+    },
+    {
+      "key": "idempotencyKey",
+      "value": "unique-checkout-key-001"
+    }
+  ],
+  "item": [
+    {
+      "name": "POST /auth/register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Demo User\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"replace-with-demo-password\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "POST /auth/login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"owner@flowdesk.demo\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "POST /auth/logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/logout"
+      }
+    },
+    {
+      "name": "GET /auth/me",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/me"
+      }
+    },
+    {
+      "name": "GET /health",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "GET /workspaces",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/workspaces"
+      }
+    },
+    {
+      "name": "POST /workspaces",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/workspaces",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"My Studio\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GET /workspaces/:id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/workspaces/{{id}}"
+      }
+    },
+    {
+      "name": "GET /workspaces/:id/members",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/workspaces/{{id}}/members"
+      }
+    },
+    {
+      "name": "POST /workspaces/:id/members",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/workspaces/{{id}}/members",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"member@flowdesk.demo\",\n  \"role\": \"MEMBER\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "PATCH /workspaces/:id/members/:userId",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/workspaces/{{id}}/members/{{userId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"role\": \"ADMIN\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "DELETE /workspaces/:id/members/:userId",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/workspaces/{{id}}/members/{{userId}}"
+      }
+    },
+    {
+      "name": "GET /projects",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/projects"
+      }
+    },
+    {
+      "name": "POST /projects",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/projects",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"workspaceId\": \"{{workspaceId}}\",\n  \"name\": \"New Project\",\n  \"description\": \"Build something useful.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GET /projects/:id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/projects/{{id}}"
+      }
+    },
+    {
+      "name": "PATCH /projects/:id",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/projects/{{id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Project\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "DELETE /projects/:id",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/projects/{{id}}"
+      }
+    },
+    {
+      "name": "GET /tasks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/tasks"
+      }
+    },
+    {
+      "name": "POST /tasks",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/tasks",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectId\": \"{{projectId}}\",\n  \"title\": \"Design the first screen\",\n  \"priority\": \"HIGH\",\n  \"assigneeId\": null,\n  \"description\": \"Create an accessible first experience.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GET /tasks/:id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/tasks/{{id}}"
+      }
+    },
+    {
+      "name": "PATCH /tasks/:id",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/tasks/{{id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"IN_PROGRESS\",\n  \"version\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "DELETE /tasks/:id",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/tasks/{{id}}"
+      }
+    },
+    {
+      "name": "GET /tasks/:id/comments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/tasks/{{id}}/comments"
+      }
+    },
+    {
+      "name": "POST /tasks/:id/comments",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/tasks/{{id}}/comments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Ready for feedback.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GET /notifications",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/notifications"
+      }
+    },
+    {
+      "name": "PATCH /notifications/:id/read",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-App-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{baseUrl}}/notifications/{{id}}/read"
+      }
+    }
+  ]
+}
