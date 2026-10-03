@@ -1,0 +1,10 @@
+import {vi} from 'vitest';
+import {PrismaClient} from '@prisma/client';
+import {PGlite} from '@electric-sql/pglite';
+import {PrismaPGlite} from 'pglite-prisma-adapter';
+import {readFile} from 'node:fs/promises';
+const pg=new PGlite();
+await pg.waitReady;
+await pg.exec(await readFile(new URL('../prisma/migrations/20261003000000_initial/migration.sql',import.meta.url),'utf8'));
+const db=new PrismaClient({adapter:new PrismaPGlite(pg)});
+vi.doMock('../src/db.ts',()=>({db}));

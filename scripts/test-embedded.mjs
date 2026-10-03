@@ -1,0 +1,1 @@
+import {spawnSync} from 'node:child_process';const result=spawnSync(process.platform==='win32'?'npm.cmd':'npm',['test'],{stdio:'inherit',env:{...process.env,TEST_DATABASE_ENGINE:'embedded',JWT_SECRET:process.env.JWT_SECRET||'test-only-jwt-secret-at-least-32-characters'}});if(result.error)throw result.error;process.exit(result.status??1);
